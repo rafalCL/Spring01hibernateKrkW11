@@ -15,4 +15,31 @@ public class Book {
     private String description;
     @ManyToOne
     private Publisher publisher;
+
+    public Book(String title, Integer rating, String description, Publisher publisher) {
+        this.title = title;
+        this.rating = rating;
+        this.description = description;
+        this.publisher = publisher;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
 }
