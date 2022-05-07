@@ -13,4 +13,6 @@ public class Book {
     private Integer rating;
     @Column(length = 1000)
     private String description;
+    @ManyToOne
+    private Publisher publisher;
 }
