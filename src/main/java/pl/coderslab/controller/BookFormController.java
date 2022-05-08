@@ -45,6 +45,7 @@ public class BookFormController {
 
     @ModelAttribute("publishers")
     public List<Publisher> publishers(){
-        return publisherDao.findAll();
+        List<Publisher> publisherList = publisherDao.findAll();
+        return publisherList;
     }
 }

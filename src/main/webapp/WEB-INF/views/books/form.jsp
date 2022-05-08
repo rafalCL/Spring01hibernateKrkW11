@@ -18,10 +18,10 @@
         <label for="description">description</label>
         <form:textarea path="description" id="description"/>
     </div>
-<%--    <div>--%>
-<%--        <label for="publisher">publisher</label>--%>
-<%--        <form:select path="publisher.id" items="${publishers}" itemLabel="name" itemValue="id" id="publisher"/>--%>
-<%--    </div>--%>
+    <div>
+        <label for="publisher">publisher</label>
+        <form:select path="publisher" items="${publishers}" itemLabel="name" itemValue="id" id="publisher"/>
+    </div>
     <div>
         <input type="submit">
     </div>

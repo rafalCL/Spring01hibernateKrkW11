@@ -32,8 +32,9 @@ public class PublisherDao {
     }
 
     public List<Publisher> findAll() {
-        return entityManager
+        List publishers = entityManager
                 .createQuery("SELECT e FROM Publisher e")
                 .getResultList();
+        return publishers;
     }
 }
