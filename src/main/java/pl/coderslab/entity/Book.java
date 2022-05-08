@@ -1,6 +1,7 @@
 package pl.coderslab.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Book {
@@ -15,6 +16,8 @@ public class Book {
     private String description;
     @ManyToOne
     private Publisher publisher;
+    @ManyToMany
+    private List<Author> authors;
 
     public Book() {
     }
@@ -64,6 +67,14 @@ public class Book {
 
     public void setPublisher(Publisher publisher) {
         this.publisher = publisher;
+    }
+
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
     }
 
     @Override

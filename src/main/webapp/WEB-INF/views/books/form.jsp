@@ -23,6 +23,10 @@
         <form:select path="publisher" items="${publishers}" itemLabel="name" itemValue="id" id="publisher"/>
     </div>
     <div>
+        <label for="authors">authors</label>
+        <form:select path="authors" items="${authors}" itemLabel="name" itemValue="id" id="authors" multiple="true"/>
+    </div>
+    <div>
         <input type="submit">
     </div>
 </form:form>

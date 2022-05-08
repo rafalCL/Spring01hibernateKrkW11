@@ -3,8 +3,10 @@ package pl.coderslab.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.dao.AuthorDao;
 import pl.coderslab.dao.BookDao;
 import pl.coderslab.dao.PublisherDao;
+import pl.coderslab.entity.Author;
 import pl.coderslab.entity.Book;
 import pl.coderslab.entity.Publisher;
 
@@ -16,10 +18,12 @@ import java.util.stream.Collectors;
 public class BookFormController {
     private final PublisherDao publisherDao;
     private final BookDao bookDao;
+    private final AuthorDao authorDao;
 
-    public BookFormController(PublisherDao publisherDao, BookDao bookDao) {
+    public BookFormController(PublisherDao publisherDao, BookDao bookDao, AuthorDao authorDao) {
         this.publisherDao = publisherDao;
         this.bookDao = bookDao;
+        this.authorDao = authorDao;
     }
 
     @GetMapping("/form")
@@ -47,5 +51,11 @@ public class BookFormController {
     public List<Publisher> publishers(){
         List<Publisher> publisherList = publisherDao.findAll();
         return publisherList;
+    }
+
+    @ModelAttribute("authors")
+    public List<Author> authors(){
+        List<Author> entities = authorDao.findAll();
+        return entities;
     }
 }
