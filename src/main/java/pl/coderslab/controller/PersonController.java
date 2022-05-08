@@ -1,6 +1,7 @@
 package pl.coderslab.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.dao.PersonDao;
 import pl.coderslab.entity.Person;
@@ -29,5 +30,11 @@ public class PersonController {
         Person person = new Person(login, password, email);
         personDao.save(person);
         return "id="+person.getId();
+    }
+
+    @GetMapping("/formBinded")
+    public String getFormBinded(Model m) {
+        m.addAttribute("person", new Person());
+        return "person/formBinded";
     }
 }
