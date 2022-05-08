@@ -9,7 +9,7 @@ import javax.persistence.Id;
 public class Publisher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     private String name;
 
     public Publisher() {

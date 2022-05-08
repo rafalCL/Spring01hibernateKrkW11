@@ -22,14 +22,14 @@ public class AppConfig implements WebMvcConfigurer {
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(publisherConverter());
+//        registry.addConverter(publisherConverter());
         registry.addConverter(authorConverter());
     }
 
-    @Bean
-    public Converter publisherConverter() {
-        return new PublisherConverter();
-    }
+//    @Bean
+//    public Converter publisherConverter() {
+//        return new PublisherConverter();
+//    }
 
     @Bean
     public Converter authorConverter() {

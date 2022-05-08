@@ -20,7 +20,7 @@
     </div>
     <div>
         <label for="publisher">publisher</label>
-        <form:select path="publisher" items="${publishers}" itemLabel="name" itemValue="id" id="publisher"/>
+        <form:select path="publisher.id" items="${publishers}" itemLabel="name" itemValue="id" id="publisher"/>
     </div>
     <div>
         <label for="authors">authors</label>
