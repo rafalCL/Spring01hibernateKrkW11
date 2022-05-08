@@ -35,4 +35,11 @@ public class BookDao {
                 .createQuery("SELECT e FROM Book e")
                 .getResultList();
     }
+
+    public List<Book> findByRating(final int minRating) {
+        return entityManager
+                .createQuery("SELECT e FROM Book e WHERE e.rating >= :minRating")
+                .setParameter("minRating", minRating)
+                .getResultList();
+    }
 }

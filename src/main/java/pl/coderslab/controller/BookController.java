@@ -10,6 +10,7 @@ import pl.coderslab.dao.PublisherDao;
 import pl.coderslab.entity.Book;
 import pl.coderslab.entity.Publisher;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,16 +40,21 @@ public class BookController {
         Book book = new Book(title, rating, description, publisher);
 
         bookDao.saveBook(book);
-        return "id="+book.getId();
+        return "id=" + book.getId();
     }
 
     @GetMapping("")
     @ResponseBody
-    public String getAll() {
-        final List<Book> books = bookDao.findAll();
+    public String filter(@RequestParam(required = false) Integer minRating) {
+        final List<Book> books = new ArrayList<>();
+        if (minRating == null) {
+            books.addAll(bookDao.findAll());
+        } else {
+            books.addAll(bookDao.findByRating(minRating));
+        }
         final String html = books.stream()
                 .map(Book::toString)
-                .collect(Collectors.joining("</div><div>","<div>", "</div>"));
+                .collect(Collectors.joining("</div><div>", "<div>", "</div>"));
 
         return html;
     }
