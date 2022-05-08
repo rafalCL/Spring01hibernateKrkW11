@@ -1,5 +1,7 @@
 package pl.coderslab.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/books")
 public class BookController {
+    private static final Logger log = LoggerFactory.getLogger(BookController.class);
     private final BookDao bookDao;
     private final PublisherDao publisherDao;
 
@@ -46,6 +49,8 @@ public class BookController {
     @GetMapping("")
     @ResponseBody
     public String filter(@RequestParam(required = false) Integer minRating) {
+        log.info("Handling request, params: minRating={}", minRating);
+
         final List<Book> books = new ArrayList<>();
         if (minRating == null) {
             books.addAll(bookDao.findAll());
