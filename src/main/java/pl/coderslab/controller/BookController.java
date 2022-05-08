@@ -10,8 +10,11 @@ import pl.coderslab.dao.PublisherDao;
 import pl.coderslab.entity.Book;
 import pl.coderslab.entity.Publisher;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Controller
-@RequestMapping("/book")
+@RequestMapping("/books")
 public class BookController {
     private final BookDao bookDao;
     private final PublisherDao publisherDao;
@@ -21,7 +24,7 @@ public class BookController {
         this.publisherDao = publisherDao;
     }
 
-    // example request GET http://localhost:8080/hiber/book/add?title=Thinking+in+Java&rating=10&description=best+book&publisherId=1
+    // example request GET http://localhost:8080/hiber/books/add?title=Thinking+in+Java&rating=10&description=best+book&publisherId=1
     @GetMapping("/add")
     @ResponseBody
     public String addBook(@RequestParam final String title,
@@ -37,5 +40,16 @@ public class BookController {
 
         bookDao.saveBook(book);
         return "id="+book.getId();
+    }
+
+    @GetMapping("")
+    @ResponseBody
+    public String getAll() {
+        final List<Book> books = bookDao.findAll();
+        final String html = books.stream()
+                .map(Book::toString)
+                .collect(Collectors.joining("</div><div>","<div>", "</div>"));
+
+        return html;
     }
 }
