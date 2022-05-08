@@ -29,12 +29,19 @@ public class PersonController {
     ) {
         Person person = new Person(login, password, email);
         personDao.save(person);
-        return "id="+person.getId();
+        return "id=" + person.getId();
     }
 
     @GetMapping("/formBinded")
     public String getFormBinded(Model m) {
         m.addAttribute("person", new Person());
         return "person/formBinded";
+    }
+
+    @PostMapping("/formBinded")
+    @ResponseBody
+    public String postFormBinded(Person person) {
+        personDao.save(person);
+        return "id=" + person.getId();
     }
 }
