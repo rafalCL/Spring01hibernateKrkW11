@@ -35,4 +35,13 @@ public class PublisherController {
                 .map(Publisher::toString)
                 .collect(Collectors.joining("</div><div>", "<div>", "</div>"));
     }
+
+    @GetMapping
+    @ResponseBody
+    public String getBy(@RequestParam(required = false) final String name) {
+        if(name == null) {
+            return getList();
+        }
+        return publisherRepository.findOneByName(name).toString();
+    }
 }
