@@ -1,7 +1,25 @@
 package pl.coderslab.entity;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
+
+// Dla encji Book ustaw następujące ograniczenia:
+//title - minimum 5 znaków
+//rating - w przedziale 1 do 10
+//description - maksymalnie 600 znaków
+//author - pole wymagane
+//publisher - pole wymagane
+//Rozbuduj encję o pole:
+//pages - większe od 1
+//Utwórz kontroler o nazwie ValidationController.
+//Uzupełnij ziarno dla walidacji.
+//Sprawdź działanie walidacji w akcji kontrolera dostępnej pod adresem /validate.
 
 @Entity
 public class Book {
@@ -9,15 +27,23 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
+    @Size(min = 5)
     private String title;
     @Column(nullable = true)
+    @Range(min = 1, max = 10)
     private Integer rating;
     @Column(length = 1000)
+    @Size(max = 600)
     private String description;
     @ManyToOne
+    @NotNull
     private Publisher publisher;
     @ManyToMany
+    @NotNull(message = "Należy podać co najmniej jednego autora")
+    @NotEmpty
     private List<Author> authors;
+    @Min(1)
+    private int pages;
 
     public Book() {
     }
@@ -77,6 +103,14 @@ public class Book {
         this.authors = authors;
     }
 
+    public int getPages() {
+        return pages;
+    }
+
+    public void setPages(int pages) {
+        this.pages = pages;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -85,6 +119,8 @@ public class Book {
                 ", rating=" + rating +
                 ", description='" + description + '\'' +
                 ", publisher=" + publisher +
+                ", authors=" + authors +
+                ", pages=" + pages +
                 '}';
     }
 }
