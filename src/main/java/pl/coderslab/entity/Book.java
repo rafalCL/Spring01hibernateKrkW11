@@ -45,6 +45,8 @@ public class Book {
     private List<Author> authors;
     @Min(1)
     private int pages;
+    @ManyToOne
+    private Category category;
 
     public Book() {
     }
@@ -63,7 +65,8 @@ public class Book {
             String description,
             List<Author> authorsSrc,
             Publisher publisher,
-            int pages
+            int pages,
+            Category category
     ) {
         this.id = id;
         this.title = title;
@@ -73,6 +76,7 @@ public class Book {
         authorsSrc.forEach(author -> authors.add(new Author(author)));
         this.publisher = new Publisher(publisher);
         this.pages = pages;
+        this.category = category;
     }
 
     public static Book create(Book toCopy) {
@@ -83,7 +87,8 @@ public class Book {
                 toCopy.description,
                 toCopy.authors,
                 toCopy.publisher,
-                toCopy.pages
+                toCopy.pages,
+                toCopy.category
         );
     }
 
@@ -141,6 +146,14 @@ public class Book {
 
     public void setPages(int pages) {
         this.pages = pages;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override
