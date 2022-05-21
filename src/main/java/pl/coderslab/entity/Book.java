@@ -56,6 +56,37 @@ public class Book {
         this.publisher = publisher;
     }
 
+    private Book(
+            long id,
+            String title,
+            Integer rating,
+            String description,
+            List<Author> authorsSrc,
+            Publisher publisher,
+            int pages
+    ) {
+        this.id = id;
+        this.title = title;
+        this.rating = rating;
+        this.description = description;
+        this.authors = new ArrayList<>();
+        authorsSrc.forEach(author -> authors.add(new Author(author)));
+        this.publisher = new Publisher(publisher);
+        this.pages = pages;
+    }
+
+    public static Book create(Book toCopy) {
+        return new Book(
+                toCopy.id,
+                toCopy.title,
+                toCopy.rating,
+                toCopy.description,
+                toCopy.authors,
+                toCopy.publisher,
+                toCopy.pages
+        );
+    }
+
     public Long getId() {
         return id;
     }
@@ -118,11 +149,11 @@ public class Book {
 //                "Book{" +
 //                "id=" + id +
                 "title='" + title + '\'' +
-                ", rating=" + rating +
-                ", description='" + description + '\'' +
-                ", publisher=" + publisher +
-                ", authors=" + authors +
-                ", pages=" + pages
+                        ", rating=" + rating +
+                        ", description='" + description + '\'' +
+                        ", publisher=" + publisher +
+                        ", authors=" + authors +
+                        ", pages=" + pages
 //                        +             '}'
                 ;
     }

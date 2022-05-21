@@ -51,12 +51,11 @@ public class BookFormController {
     public String getList() {
         return bookDao.findAll()
                 .stream()
-                .peek(book -> Hibernate.initialize(book.getAuthors())) // not pure do not do like this. next commit will provide fix
-//                .map(book -> {
-//                    Book newBook = new Book(book);
-//                    Hibernate.initialize(newBook.getAuthors());
-//                    return newBook;
-//                })
+                .map(book -> {
+                    final Book copy = Book.create(book);
+                    Hibernate.initialize(copy.getAuthors());
+                    return copy;
+                })
                 .map(Book::toString)
                 .collect(Collectors.joining("</div><div>", "<div>", "</div>"));
     }

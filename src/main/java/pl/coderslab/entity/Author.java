@@ -20,6 +20,13 @@ public class Author {
         this.name = name;
     }
 
+    public Author(final Author other) {
+        if(other != null) {
+            this.id = other.id;
+            this.name = other.name;
+        }
+    }
+
     public long getId() {
         return id;
     }
