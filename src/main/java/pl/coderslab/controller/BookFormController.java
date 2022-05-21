@@ -6,11 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.dao.AuthorDao;
-import pl.coderslab.dao.BookDao;
 import pl.coderslab.dao.PublisherDao;
 import pl.coderslab.entity.Author;
 import pl.coderslab.entity.Book;
 import pl.coderslab.entity.Publisher;
+import pl.coderslab.repository.BookRepository;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -21,12 +21,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/books")
 public class BookFormController {
     private final PublisherDao publisherDao;
-    private final BookDao bookDao;
+    private final BookRepository bookRepository;
     private final AuthorDao authorDao;
 
-    public BookFormController(PublisherDao publisherDao, BookDao bookDao, AuthorDao authorDao) {
+    public BookFormController(PublisherDao publisherDao, BookRepository bookRepository, AuthorDao authorDao) {
         this.publisherDao = publisherDao;
-        this.bookDao = bookDao;
+        this.bookRepository = bookRepository;
         this.authorDao = authorDao;
     }
 
@@ -41,7 +41,7 @@ public class BookFormController {
         if (validationResult.hasErrors()) {
             return "books/form";
         }
-        bookDao.saveBook(book);
+        bookRepository.save(book);
         return "redirect:list";
     }
 
@@ -49,7 +49,7 @@ public class BookFormController {
     @ResponseBody
     @Transactional
     public String getList() {
-        return bookDao.findAll()
+        return bookRepository.findAll()
                 .stream()
                 .map(book -> {
                     final Book copy = Book.create(book);

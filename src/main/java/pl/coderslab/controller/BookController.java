@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import pl.coderslab.dao.BookDao;
 import pl.coderslab.dao.PublisherDao;
 import pl.coderslab.entity.Book;
 import pl.coderslab.entity.Category;
@@ -26,13 +25,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/books")
 public class BookController {
     private static final Logger log = LoggerFactory.getLogger(BookController.class);
-    private final BookDao bookDao;
     private final PublisherDao publisherDao;
     private final BookRepository bookRepository;
     private final CategoryRepository categoryRepository;
 
-    public BookController(BookDao bookDao, PublisherDao publisherDao, BookRepository bookRepository, CategoryRepository categoryRepository) {
-        this.bookDao = bookDao;
+    public BookController(PublisherDao publisherDao, BookRepository bookRepository, CategoryRepository categoryRepository) {
         this.publisherDao = publisherDao;
         this.bookRepository = bookRepository;
         this.categoryRepository = categoryRepository;
@@ -52,7 +49,7 @@ public class BookController {
 
         Book book = new Book(title, rating, description, publisher);
 
-        bookDao.saveBook(book);
+        bookRepository.save(book);
         return "id=" + book.getId();
     }
 
@@ -63,9 +60,9 @@ public class BookController {
 
         final List<Book> books = new ArrayList<>();
         if (minRating == null) {
-            books.addAll(bookDao.findAll());
+            books.addAll(bookRepository.findAll());
         } else {
-            books.addAll(bookDao.findByRating(minRating));
+            books.addAll(bookRepository.findByRatingGreaterThanEqual(minRating));
         }
         final String html = books.stream()
                 .map(Book::toString)
@@ -78,7 +75,7 @@ public class BookController {
     @ResponseBody
     @Transactional
     public String filterByCatId(@RequestParam Long categoryId) {
-        final List<Book> books =  bookRepository.findAllByCategoryId(categoryId);
+        final List<Book> books = bookRepository.findAllByCategoryId(categoryId);
 
         final String html = books.stream()
                 .map(book -> {
@@ -117,7 +114,7 @@ public class BookController {
     @ResponseBody
     @Transactional
     public String filterByCatId(@RequestParam final String title) {
-        final List<Book> books =  bookRepository.findAllByTitle(title);
+        final List<Book> books = bookRepository.findAllByTitle(title);
 
         final String html = books.stream()
                 .map(book -> {

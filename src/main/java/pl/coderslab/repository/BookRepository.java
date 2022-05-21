@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import pl.coderslab.entity.Book;
 import pl.coderslab.entity.Category;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
@@ -13,4 +14,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findAllByCategory(Category category);
 //    metodę wyszukującą książki dla zadanego id kategorii
     List<Book> findAllByCategoryId(long categoryId);
+
+    List<Book> findByRatingGreaterThanEqual(Integer minRating);
 }
