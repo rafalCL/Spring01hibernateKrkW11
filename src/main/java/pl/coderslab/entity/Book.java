@@ -7,6 +7,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 // Dla encji Book ustaw następujące ograniczenia:
@@ -113,14 +114,16 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
+        return
+//                "Book{" +
+//                "id=" + id +
+                "title='" + title + '\'' +
                 ", rating=" + rating +
                 ", description='" + description + '\'' +
                 ", publisher=" + publisher +
                 ", authors=" + authors +
-                ", pages=" + pages +
-                '}';
+                ", pages=" + pages
+//                        +             '}'
+                ;
     }
 }
