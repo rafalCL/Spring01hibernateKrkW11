@@ -25,4 +25,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     //metodę wyszukującą książki dla zadanej kategorii
     @Query("SELECT b FROM Book b WHERE b.category = :category")
     List<Book> findByCategory(@Param("category") Category category);
+    // select b.id, b.title, a.name, b.category_id, ba.* from book b left join book_author ba on b.id = ba.book_id left join author a on ba.authors_id = a.id where b.category_id=2;
+    @Query("SELECT distinct b FROM Book b LEFT JOIN FETCH b.authors WHERE b.category.id = :catId ")
+    List<Book> findAllByCategoryIdWithAuthors(@Param("catId") Long categoryId);
 }

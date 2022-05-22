@@ -71,18 +71,12 @@ public class BookController {
         return html;
     }
 
-    @GetMapping("/bycatid")
+    @GetMapping("/bycategoryid")
     @ResponseBody
-    @Transactional
     public String filterByCatId(@RequestParam Long categoryId) {
-        final List<Book> books = bookRepository.findAllByCategoryId(categoryId);
+        final List<Book> books = bookRepository.findAllByCategoryIdWithAuthors(categoryId);
 
         final String html = books.stream()
-                .map(book -> {
-                    final Book copy = Book.create(book);
-                    Hibernate.initialize(copy.getAuthors());
-                    return copy;
-                })
                 .map(Book::toString)
                 .collect(Collectors.joining("</div><div>", "<div>", "</div>"));
 
