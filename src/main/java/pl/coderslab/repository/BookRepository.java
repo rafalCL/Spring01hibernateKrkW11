@@ -1,6 +1,8 @@
 package pl.coderslab.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import pl.coderslab.entity.Book;
 import pl.coderslab.entity.Category;
 
@@ -16,4 +18,11 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findAllByCategoryId(long categoryId);
 
     List<Book> findByRatingGreaterThanEqual(Integer minRating);
+
+    // metodę wyszukującą książki dla zadanego tytułu.
+    @Query("SELECT b FROM Book b WHERE b.title = :title")
+    List<Book> findByTitle(@Param("title") String title);
+    //metodę wyszukującą książki dla zadanej kategorii
+    @Query("SELECT b FROM Book b WHERE b.category = :category")
+    List<Book> findByCategory(@Param("category") Category category);
 }

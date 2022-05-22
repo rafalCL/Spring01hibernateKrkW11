@@ -127,4 +127,43 @@ public class BookController {
 
         return html;
     }
+
+    @GetMapping("/bycategory2")
+    @ResponseBody
+    @Transactional
+    public String filterByCategory2(@RequestParam Long categoryId) {
+        final List<Book> books = new ArrayList<>();
+
+        Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
+        categoryOptional.ifPresent(category -> books.addAll(bookRepository.findByCategory(category)));
+
+        final String html = books.stream()
+                .map(book -> {
+                    final Book copy = Book.create(book);
+                    Hibernate.initialize(copy.getAuthors());
+                    return copy;
+                })
+                .map(Book::toString)
+                .collect(Collectors.joining("</div><div>", "<div>", "</div>"));
+
+        return html;
+    }
+
+    @GetMapping("/bytitle2")
+    @ResponseBody
+    @Transactional
+    public String filterByCatId2(@RequestParam final String title) {
+        final List<Book> books = bookRepository.findByTitle(title);
+
+        final String html = books.stream()
+                .map(book -> {
+                    final Book copy = Book.create(book);
+                    Hibernate.initialize(copy.getAuthors());
+                    return copy;
+                })
+                .map(Book::toString)
+                .collect(Collectors.joining("</div><div>", "<div>", "</div>"));
+
+        return html;
+    }
 }
